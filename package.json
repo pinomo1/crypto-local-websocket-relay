@@ -1,0 +1,16 @@
+{
+  "name": "open-local-chat-server",
+  "version": "0.0.1",
+  "description": "Server for encrypted 1-1 chat in local networks",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node server.ts"
+  },
+  "author": "pinomo / pinomo1 et al.",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^4.7.2",
+    "ts-node": "^10.9.1"
+  }
+}
