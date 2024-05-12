@@ -9,6 +9,6 @@ export class Hasher {
             hash = ((hash << 5) - hash) + char;
             hash |= 0;
         }
-        return hash;
+        return hash < 0 ? -hash : hash;
     }
 }

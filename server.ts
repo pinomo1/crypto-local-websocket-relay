@@ -217,6 +217,7 @@ io.on('connection', (socket) => {
         }
         chatRoom.addSocket(socket.id);
         sockets.set(socket.id, room);
+        console.log(`[${room}] ${socket.id} joined`);
         socket.join(room);
         socket.to(room).emit('joined', room);
     });
@@ -227,21 +228,25 @@ io.on('connection', (socket) => {
             return;
         }
         let room = sockets.get(socket.id)!;
+        /*
         if (!isValidMessage(message)){
             socket.emit('error', "Invalid message");
             return;
         }
+        */
         message = normalizeMessage(message);
         socket.to(room).emit('chat', message);
+        console.log(`[${room}] ${socket.id}: ${message}`);
     });
 
-    socket.on('service', (message: string) => {
+    socket.on('service', (type: string, message: string) => {
         if (!sockets.has(socket.id)){
             socket.emit('error', "Not logged in");
             return;
         }
         let room = sockets.get(socket.id)!;
-        socket.to(room).emit('service', message);
+        socket.to(room).emit('service', type, message);
+        console.log(`<Service> [${room}] ${socket.id}: ${type} ${message}`);
     });
 
     socket.on('disconnect', () => {
@@ -256,6 +261,7 @@ io.on('connection', (socket) => {
         if (chatRoom.getSockets().size == 0){
             ChatRooms.delete(room);
         }
+        console.log(`[${room}] ${socket.id} left`);
     });
 });
 
